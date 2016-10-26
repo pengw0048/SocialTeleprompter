@@ -32,7 +32,6 @@ namespace SocialTeleprompter
             InitializeComponent();
             RecognizeResult.FontSize *= 2;
             RecognizeResult2.FontSize *= 2;
-            WordHint.FontSize *= 2;
         }
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
@@ -75,9 +74,9 @@ namespace SocialTeleprompter
                 Dispatcher.Invoke(
                     (Action)(() =>
                     {
-
-                        this.micClient.EndMicAndRecognition();
+                        StartButton_Click(null, null);
                     }));
+                return;
             }
             Dispatcher.Invoke(
                     (Action)(() =>
@@ -118,6 +117,24 @@ namespace SocialTeleprompter
                 RecognizeResult2.Selection.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Colors.Yellow));
             }
         }));
+                            Task.Run(() => 
+                            {
+                                using (var wc1 = new WebClient())
+                                {
+                                    var html = "<style>b{font-weight:normal;background-color:yellow}</style><ul>";
+                                    foreach (Match match in Regex.Matches(res, "\"(.+?)\""))
+                                    {
+                                        wc1.Headers.Add("Ocp-Apim-Subscription-Key", "74c0f1f7c19b49018ddd9949a9d7ea56");
+                                        wc1.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko");
+                                        var word = match.Groups[1].Value;
+                                        var res1 = wc1.DownloadString("https://api.cognitive.microsoft.com/bing/v5.0/search?count=1&responseFilter=Webpages&textDecorations=true&textFormat=HTML&q=" + System.Uri.EscapeUriString(word));
+                                        res1 = Regex.Match(res1, "\"snippet\": \"(.*?)\"").Groups[1].Value;
+                                        html += "<li>" + res1 + "</li>";
+                                    }
+                                    html += "</ul>";
+                                    Dispatcher.Invoke(() => { WordHint.NavigateToString(html); });
+                                }
+                            });
                         }
                     }
                 });

@@ -1,0 +1,27 @@
+﻿<Window x:Class="SocialTeleprompter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SocialTeleprompter"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="596.667" Width="750.333">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="StartButton" Content="Start" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" Width="75" Click="StartButton_Click"/>
+            <TextBox x:Name="ApiKey1" VerticalAlignment="Center" Text="4a77abe2afb644e0be9dfe6370a5a0f0" Foreground="Gray"/>
+        </StackPanel>
+        <RichTextBox x:Name="RecognizeResult" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto"/>
+        <RichTextBox x:Name="RecognizeResult2" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto"/>
+        <TextBox x:Name="WordHint" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap"/>
+    </Grid>
+</Window>
